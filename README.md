@@ -1,3 +1,72 @@
+# Setting
+### 1. docker
+```
+$ docker pull nvidia/cuda:11.3.1-cudnn8-devel-ubuntu18.04
+$ docker run -it --gpus all --name container_name -v /path/to/workspace:/root -v /path/to/dataset:/root/dataset nvidia/cuda:11.3.1-cudnn8-devel-ubuntu18.04
+
+# apt-get update
+# apt-get install sudo
+```
+
+### 2. anaconda
+```
+# sudo apt install curl -y
+# curl --output anaconda.sh https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
+# sha256sum anaconda.sh
+# bash anaconda.sh
+# sudo apt-get install vim
+# vim ~/.bashrc
+# source ~/.bashrc
+# conda -V
+
+# exit
+
+$ docker exec -it container_name bash
+```
+
+### 3. Pytorch
+```
+# conda install pytorch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 cudatoolkit=11.3 -c pytorch
+# python
+>>> import torch
+>>> torch.cuda.is_available()
+True
+```
+
+### 4. Detectron2
+```
+# sudo apt-get install git
+# git clone https://github.com/facebookresearch/detectron2.git
+# python -m pip install -e detectron2
+# cd detectron2
+# mv configs/ detectron2
+```
+
+### 5. Test
+```
+# git clone https://github.com/Vastlab/Elephant-of-object-detection.git
+# cd Elephant-of-object-detection
+
+# vim main.py
+...
+change the path on 162 line to your dataset path.
+maybe it is '/root/dataset/something/..'
+..
+```
+
+in my case. my gpu is small..
+```
+# vim ~/detectron2/detectron2/engine/defaults.py
+...
+change the "opts" on 134 line to "--opts"
+...
+
+# python main.py --num-gpus 1 --config-file training_configs/faster_rcnn_R_50_FPN.yaml --opts SOLVER.IMS_PER_BATCH 4
+...
+can check the "SOLVER.IMS_PER_BATCH" in 562 line of detectron2/detectron2/config/defaults.py 
+...
+```
+
 # The Overlooked Elephant of Object Detection: Open Set
 This repository contains the code for the evaluation approach proposed in the paper [The Overlooked Elephant of Object Detection: Open Set](https://openaccess.thecvf.com/content_WACV_2020/papers/Dhamija_The_Overlooked_Elephant_of_Object_Detection_Open_Set_WACV_2020_paper.pdf)
 
