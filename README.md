@@ -56,12 +56,7 @@ maybe it is '/root/dataset/something/..'
 
 in my case. my gpu is small..
 ```
-# vim ~/detectron2/detectron2/engine/defaults.py
-...
-change the "opts" on 134 line to "--opts"
-...
-
-# python main.py --num-gpus 1 --config-file training_configs/faster_rcnn_R_50_FPN.yaml --opts SOLVER.IMS_PER_BATCH 4
+# python main.py --num-gpus 1 --config-file training_configs/faster_rcnn_R_50_FPN.yaml SOLVER.IMS_PER_BATCH 4
 ...
 can check the "SOLVER.IMS_PER_BATCH" in 562 line of detectron2/detectron2/config/defaults.py 
 ...
